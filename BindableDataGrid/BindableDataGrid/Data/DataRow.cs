@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Reflection;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace BindableDataGrid.Data
 {
@@ -11,7 +12,6 @@ namespace BindableDataGrid.Data
     /// </summary>
     public class DataRow
     {
-
         #region "Properties"
 
         /// <summary>
@@ -46,6 +46,29 @@ namespace BindableDataGrid.Data
         public DataRow()
         {
             this.Items = new Dictionary<string, object>();
+        }
+
+        /// <summary>
+        /// Specifies equality between objects
+        /// </summary>
+        /// <param name="obj">Object to compare to</param>
+        /// <returns>True or False</returns>
+        public new bool Equals(object obj)
+        {
+            bool equal = false;
+            if (obj is DataRow)
+            {
+                DataRow dest = obj as DataRow;
+                if (this.Items.Count == dest.Items.Count)
+                {
+                    equal = true;
+                    foreach (string key in this.Items.Keys)
+                    {
+                        equal = equal && dest.Items.ContainsKey(key) && this.Items[key].Equals(dest.Items[key]);
+                    }
+                }
+            }
+            return equal;
         }
 
         /// <summary>
@@ -92,7 +115,7 @@ namespace BindableDataGrid.Data
             // property has no parameters. (If you don't specify null, you must
             // specify an array of Type objects. For a parameterless property,
             // use an array with no elements: new Type[] {})
-            PropertyBuilder myPropertyBuilder = myTypeBuilder.DefineProperty(name.ToUpper(), PropertyAttributes.HasDefault, type, null);
+            PropertyBuilder myPropertyBuilder = myTypeBuilder.DefineProperty(name, PropertyAttributes.HasDefault, type, null);
 
             // The property set and property get methods require a special set of attributes
             MethodAttributes getSetAttr = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;

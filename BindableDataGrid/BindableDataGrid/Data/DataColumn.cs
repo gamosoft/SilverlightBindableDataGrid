@@ -49,7 +49,9 @@ namespace BindableDataGrid.Data
         #region "Methods"
 
         /// <summary>
-        /// Constructor with a column name. The caption (header) will be the same
+        /// Constructor with a column name.
+        /// The caption (header) will be the same.
+        /// Defaults to "String" type
         /// </summary>
         /// <param name="columnName">Name of the column</param>
         public DataColumn(string columnName)
@@ -61,25 +63,18 @@ namespace BindableDataGrid.Data
             this.AllowSort = true;
             this.AllowReorder = true;
             this.ReadOnly = false;
+            this.DataType = typeof(String);
         }
 
         /// <summary>
-        /// Constructor of the class
+        /// Constructor with a column name and a type.
+        /// The caption (header) will be the same as the column name.
         /// </summary>
         /// <param name="columnName">Name of the column</param>
-        /// <param name="caption">Header text</param>
-        /// <param name="allowResize">Allow resizing</param>
-        /// <param name="allowSort">Allow sorting</param>
-        /// <param name="allowReorder">Allow reordering</param>
-        /// <param name="readOnly">Read only column</param>
-        public DataColumn(string columnName, string caption, bool allowResize, bool allowSort, bool allowReorder, bool readOnly)
+        /// <param name="columnType">Type of the column</param>
+        public DataColumn(string columnName, Type columnType) : this(columnName)
         {
-            this.ColumnName = columnName;
-            this.Caption = caption;
-            this.AllowResize = allowResize;
-            this.AllowSort = allowSort;
-            this.AllowReorder = allowReorder;
-            this.ReadOnly = readOnly;
+            this.DataType = columnType;
         }
 
         #endregion

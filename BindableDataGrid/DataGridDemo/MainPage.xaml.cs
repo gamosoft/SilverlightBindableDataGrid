@@ -1,7 +1,10 @@
 ﻿using System;
-using System.Windows.Controls;
-using BindableDataGrid.Data;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using BindableDataGrid.Data;
 
 namespace DataGridDemo
 {
@@ -28,6 +31,7 @@ namespace DataGridDemo
         private void btnCreateData_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.LoadData();
+            myBindableDG.SelectionChanged += new SelectionChangedEventHandler(myBindableDG_SelectionChanged);
         }
 
         /// <summary>
@@ -38,6 +42,7 @@ namespace DataGridDemo
             // Create some sample names
             List<string> firstNames = new List<string>() { "Peter", "Frank", "Joe", "Lewis", "Jack", "Andrew", "Susan", "Marie", "Linda", "Anne", "Claire", "Debra" };
             List<string> lastNames = new List<string>() { "Smith", "Brown", "Green", "Parker", "Johnson", "Jackson", "Ford", "Sullivan" };
+            List<string> icons = new List<string>() { "UserGreen.png", "UserYellow.png", "UserRed.png" };
 
             // Create a sample DataTable
             DataTable dt = new DataTable("MyDataTable");
@@ -70,12 +75,24 @@ namespace DataGridDemo
             dt.Columns.Add(dc3);
 
             // Create a column
-            DataColumn dc4 = new DataColumn("col4", "Married", true, true, true, true);
+            DataColumn dc4 = new DataColumn("col4");
+            dc4.Caption = "Married";
+            dc4.ReadOnly = true;
+            dc4.DataType = typeof(Boolean);
             dt.Columns.Add(dc4);
 
             // Create a column
-            DataColumn dc5 = new DataColumn("col5", "Membership expiration", true, true, true, true);
+            DataColumn dc5 = new DataColumn("col5");
+            dc5.Caption = "Membership expiration";
+            dc5.ReadOnly = true;
+            dc5.DataType = typeof(DateTime);
             dt.Columns.Add(dc5);
+
+            // Create a column
+            DataColumn dc6 = new DataColumn("col6", typeof(Image));
+            dc6.Caption = "Status";
+            dc6.ReadOnly = true;
+            dt.Columns.Add(dc6);
 
             // Add sample rows to the table
             Random r = new Random();
@@ -87,6 +104,14 @@ namespace DataGridDemo
                 dr["col3"] = r.Next(20, 81);
                 dr["col4"] = (r.Next(0,2) == 1);
                 dr["col5"] = DateTime.Now.AddDays(r.Next(10));
+
+                Uri uri = new Uri("Images/" + icons[r.Next(icons.Count)], UriKind.RelativeOrAbsolute);
+                ImageSource imgSource = new BitmapImage(uri);
+                Image img = new Image();
+                img.ImageFailed += new EventHandler<ExceptionRoutedEventArgs>(img_ImageFailed);
+                img.Source = new BitmapImage(uri);
+                
+                dr["col6"] = img;
                 dt.Rows.Add(dr);
             }
 
@@ -95,6 +120,7 @@ namespace DataGridDemo
             ds.Tables.Add(dt);
 
             // Do the binding
+            myBindableDG.AutoGenerateColumns = false;
             myBindableDG.DataSource = ds;
             myBindableDG.DataMember = "MyDataTable";
             myBindableDG.DataBind();
@@ -102,7 +128,33 @@ namespace DataGridDemo
             // We could do this as well
             // myBindableDG.DataSource = dt;
             // myBindableDG.DataBind();
+        }
 
+        /// <summary>
+        /// Change selected rows information
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">SelectionChangedEventArgs</param>
+        private void myBindableDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataRowCollection dcol = myBindableDG.SelectedItems;
+            List<string> items = new List<string>();
+            foreach (DataRow dr in dcol)
+            {
+                items.Add(dr["col1"].ToString() + " " + dr["col2"].ToString());
+            }
+
+            this.lbSelectedItems.ItemsSource = items;
+        }
+
+        /// <summary>
+        /// If there are any errors loading any image
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">ExceptionRoutedEventArgs</param>
+        private void img_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            // Handle the error here
         }
 
         #endregion
