@@ -36,7 +36,7 @@ namespace BindableDataGrid.Data
             }
         }
 
-        #endregion
+        #endregion "Properties"
 
         #region "Methods"
 
@@ -141,6 +141,6 @@ namespace BindableDataGrid.Data
             myPropertyBuilder.SetSetMethod(setMethodBuilder);
         }
 
-        #endregion
+        #endregion "Methods"
     }
 }

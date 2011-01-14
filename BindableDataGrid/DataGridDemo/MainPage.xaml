@@ -9,6 +9,7 @@
     <StackPanel x:Name="LayoutRoot" Width="640" Height="600">
         <bDG:BindableDataGrid x:Name="myBindableDG" Width="640" Height="400" />
         <Button x:Name="btnCreateData" Content="Create sample data" Click="btnCreateData_Click" />
+        <Button x:Name="btnToString" Content="ToString" Click="btnToString_Click" />
         <TextBox Text="Selected item/s" IsReadOnly="True"></TextBox>
         <ListBox x:Name="lbSelectedItems" Height="100"></ListBox>
     </StackPanel>

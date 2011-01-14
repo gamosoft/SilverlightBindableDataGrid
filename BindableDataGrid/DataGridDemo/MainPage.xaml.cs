@@ -35,6 +35,19 @@ namespace DataGridDemo
         }
 
         /// <summary>
+        /// Handle the click event of the button to "serialize" the DataSource
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Args</param>
+        private void btnToString_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (myBindableDG.DataSource != null)
+            {
+                MessageBox.Show(myBindableDG.DataSource.ToString());
+            }
+        }
+
+        /// <summary>
         /// Sample method to load random data into the grid
         /// </summary>
         public void LoadData()

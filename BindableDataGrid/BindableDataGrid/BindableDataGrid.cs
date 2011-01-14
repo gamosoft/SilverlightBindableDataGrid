@@ -75,7 +75,7 @@ namespace BindableDataGrid
             }
         }
 
-        #endregion
+        #endregion "Properties"
 
         #region "Methods"
 
@@ -276,9 +276,9 @@ namespace BindableDataGrid
                     e.Column.CanUserReorder = dc.AllowReorder;
                     break;
                 }
-            }            
+            }
         }
 
-        #endregion
+        #endregion "Methods"
     }
 }

@@ -32,7 +32,7 @@ namespace BindableDataGrid.Data
             }
         }
 
-        #endregion
+        #endregion "Properties"
 
         #region "Methods"
 
@@ -52,6 +52,6 @@ namespace BindableDataGrid.Data
             base.Add(dc);
         }
 
-        #endregion
+        #endregion "Methods"
     }
 }

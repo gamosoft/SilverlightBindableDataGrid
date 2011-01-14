@@ -44,7 +44,7 @@ namespace BindableDataGrid.Data
         /// </summary>
         public bool ReadOnly { get; set; }
 
-        #endregion
+        #endregion "Properties"
 
         #region "Methods"
 
@@ -77,6 +77,6 @@ namespace BindableDataGrid.Data
             this.DataType = columnType;
         }
 
-        #endregion
+        #endregion "Methods"
     }
 }
