@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using BindableDataGrid.Data;
+using System.Globalization;
+using System.Windows.Markup;
 
 namespace DataGridDemo
 {
@@ -21,6 +23,11 @@ namespace DataGridDemo
         public MainPage()
         {
             InitializeComponent();
+
+            // Changing the culture to show dates in different formats for example
+            //CultureInfo ci = new CultureInfo("fr-fr");
+            //System.Threading.Thread.CurrentThread.CurrentCulture = ci;
+            //this.Language = XmlLanguage.GetLanguage(System.Threading.Thread.CurrentThread.CurrentCulture.Name);
         }
 
         /// <summary>
