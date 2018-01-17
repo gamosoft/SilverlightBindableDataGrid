@@ -38,8 +38,8 @@ dt.Columns.Add(dc2);
 
 // Add a row to the table
 DataRow dr = new DataRow();
-dr["col1"](_col1_) = "Peter";
-dr["col2"](_col2_) = "Johnson";
+dr["col1"] = "Peter";
+dr["col2"] = "Johnson";
 dt.Rows.Add(dr);
 
 // Create a DataSet and add the table to it
@@ -69,8 +69,8 @@ Uri uri = new Uri("Images/UserGreen.png", UriKind.RelativeOrAbsolute);
 ImageSource imgSource = new BitmapImage(uri);
 Image img = new Image();
 img.Source = new BitmapImage(uri);
-...
-dr["col6"](_col6_) = img;
+
+dr["col6"] = img;
 ````
 Plans include to add more validation and bullet-proof the current code, extend types of datasources, translator between equivalent .Net classes (i.e.: serialize a .Net DataSet so it can be deserialized into this "custom" DataSet to be used by the grid), ...
 
